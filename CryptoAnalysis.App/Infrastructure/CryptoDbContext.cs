@@ -24,7 +24,26 @@ namespace CryptoAnalysis.App.Infrastructure
             modelBuilder.Entity<MarketData>()
             .HasOne(m => m.Asset)
             .WithMany()
-            .HasForeignKey(m => m.AssetId);
+            .HasForeignKey(m => m.AssetId)
+            .OnDelete(DeleteBehavior.Cascade);;
+
+            modelBuilder.Entity<VolatilityMetrics>()
+            .HasOne<Asset>()
+            .WithMany()
+            .HasForeignKey(v => v.AssetId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CorrelationMetrics>()
+            .HasOne<Asset>()
+            .WithMany()
+            .HasForeignKey(c => c.AssetId1)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CorrelationMetrics>()
+            .HasOne<Asset>()
+            .WithMany()
+            .HasForeignKey(c => c.AssetId2)
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
